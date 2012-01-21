@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block main %}
+	
+	{% if topic %}
+		<form action="{% url djazz.forum.views.new topic %}" method="post">
+	{% else %}
+		<form action="{% url djazz.forum.views.new %}" method="post">
+	{% endif %}
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" name="submit" value="Submit" />
+		<input type="submit" name="submit" value="Preview" />
+	</form>
+	
+	<hr />
+	
+	<ul>
+		{% if preview %}
+			<li class="preview">
+				Titre: {{ preview.title }}<br />
+				<pre>{{ preview.content }}</pre>
+				<hr />
+			</li>
+		{% endif %}
+		{% for post in posts %}
+			<li>
+				Titre: {{ post.title }}<br />
+				<pre>{{ post.content }}</pre>
+				<hr />
+			</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

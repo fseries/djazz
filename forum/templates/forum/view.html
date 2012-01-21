@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% url djazz.forum.views.new posts.0.uid as reply_url %}
+<a href="{{ reply_url|urlencode }}">Répondre</a>
+<ul>
+	{% for post in posts %}
+	<li>
+		Titre: {{ post.title }}<br />
+		<pre>{{ post.content }}</pre>
+		<hr />
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

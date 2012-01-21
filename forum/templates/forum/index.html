@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<table>
+<thead>
+	<tr>
+		<th>Titre</th>
+		<th>Auteur</th>
+		<th>Date</th>
+		<th>Dernière édition</th>
+	</tr>
+</thead>
+
+<tbody>
+	{% for post in posts %}
+	<tr>
+		{% url djazz.forum.views.topic post.uid as url %}
+		<td><a href="{{ url|urlencode }}">{{ post.title }}</a></td>
+		<td>{{ post.author.username }}</td>
+		<td>{{ post.date }}</td>
+		<td>par {{ post.last_editor.username }} {{ post.last_date }}</td>
+	</tr>
+	{% endfor %}
+</tbody>
+
+</table>
+{% endblock %}
