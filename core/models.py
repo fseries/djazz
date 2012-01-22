@@ -1,6 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User)
 
 class Config(models.Model):
     site    = models.ForeignKey(Site,null=True,blank=True)
@@ -14,3 +20,9 @@ class Config(models.Model):
     class Meta:
         ordering    = ['section','key']
         unique_together = ('site', 'section', 'key')
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender,**kwargs):
+    if kwargs['created']:
+        Profile.objects.get_or_create(user=kwargs['instance'])
