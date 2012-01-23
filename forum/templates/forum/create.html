@@ -3,9 +3,9 @@
 {% block main %}
 	
 	{% if topic %}
-		<form action="{% url djazz.forum.views.new topic %}" method="post">
+		<form action="{% url djazz.forum.views.create topic=topic.id %}" method="post">
 	{% else %}
-		<form action="{% url djazz.forum.views.new %}" method="post">
+		<form action="{% url djazz.forum.views.create forum=forum.id %}" method="post">
 	{% endif %}
 		{% csrf_token %}
 		{{ form.as_p }}

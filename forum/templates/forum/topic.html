@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main %}
-{% url djazz.forum.views.new posts.0.uid as reply_url %}
-<a href="{{ reply_url|urlencode }}">Répondre</a>
+<a href="{% url djazz.forum.views.create topic=posts.0.id %}">Répondre</a>
 <ul>
 	{% for post in posts %}
 	<li>

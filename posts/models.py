@@ -29,12 +29,11 @@ class Post(models.Model):
         super(Post, self).save(*args, **kwargs)
 
 class PostVar(models.Model):
-    post    = models.ForeignKey('Post',related_name="postvars")
+    post    = models.ForeignKey('Post',related_name="postvar_post")
     key     = models.CharField(max_length=60)
     value   = models.TextField(null=True,blank=True)
     def __unicode__(self):
         return self.key + " - " + self.post.unix_title
-
 
 class Type(models.Model):
     name        = models.CharField(max_length=20)

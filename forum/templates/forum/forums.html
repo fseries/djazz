@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="forums container_16">
+	{% for f in forums %}
+	<div class="forum">
+		<h3>{{ f.name }}</h3>
+		
+		<a href="{% url djazz.forum.views.create forum=f.id %}">New topic</a>
+		
+		{% for topic in f.topics %}
+			<div class="topic">
+				<h4>{{ topic.title }}</h4>
+				<a href="{% url djazz.forum.views.topic topic.id %}">view</a>
+			</div>
+		{% endfor %}
+		
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}
