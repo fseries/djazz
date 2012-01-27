@@ -8,6 +8,11 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User)
 
+@receiver(post_save, sender=User)
+def create_profile(sender,**kwargs):
+    if kwargs['created']:
+        Profile.objects.get_or_create(user=kwargs['instance'])
+
 class Config(models.Model):
     site    = models.ForeignKey(Site,null=True,blank=True)
     section = models.CharField(max_length=15,null=True,blank=True)
@@ -22,7 +27,14 @@ class Config(models.Model):
         unique_together = ('site', 'section', 'key')
 
 
-@receiver(post_save, sender=User)
-def create_profile(sender,**kwargs):
-    if kwargs['created']:
-        Profile.objects.get_or_create(user=kwargs['instance'])
+class Menu(models.Model):
+    title       = models.CharField(max_length=60)
+    attributes  = models.TextField()
+    description = models.CharField(max_length=255)
+    
+class MenuItem(models.Model):
+    label   = models.CharField(max_length=60)
+    url     = models.TextField()
+    menu    = models.ForeignKey('Menu',related_name='menuitem_menu')
+    attributes  = models.TextField()
+    
