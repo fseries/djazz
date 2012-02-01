@@ -90,7 +90,22 @@ class MenuItem(models.Model):
         item.prev = self
         item.save()
     
-#    def childof(self,item):
+    def childof(self,item):
+        if self.prev:
+            self.prev.next = self.next
+            self.prev.save()
+        if self.next:
+            self.next.prev = self.prev
+            self.next.save()
+        
+        lastchild = item.menuitem_parent.get(next=None)
+        lastchild.next = self
+        lastchild.save()
+        self.next = None
+        self.prev = lastchild
+        self.parent = item
+        self.save()
+        
 #    def left(self)
 #    def right(self)
 #    def up(self)
