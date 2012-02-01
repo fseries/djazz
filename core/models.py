@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from djazz.core.db import ModelTree
 
 
 class Profile(models.Model):
@@ -51,12 +50,32 @@ class MenuItem(models.Model):
     def __unicode__(self):
         return self.label
     
+    def after(self,item):
+        if self.next:
+            self.next.prev = self.prev
+            self.next.save()
+            if self.next.id == item.id:
+                item = self.next
+        if self.prev:
+            self.prev.next = self.next
+            self.prev.save()
+        
+        self.prev = item
+        self.next = item.next
+        self.parent = item.parent
+        self.save()
+        if item.next:
+            item.next.prev = self
+            item.next.save()
+        item.next = self
+        item.save()
+    
     def before(self,item):
         if self.prev:
-                self.prev.next = self.next
-                self.prev.save()
-                if self.prev.id == item.id:
-                    item = self.prev
+            self.prev.next = self.next
+            self.prev.save()
+            if self.prev.id == item.id:
+                item = self.prev
         if self.next:
             self.next.prev = self.prev
             self.next.save()
@@ -71,7 +90,6 @@ class MenuItem(models.Model):
         item.prev = self
         item.save()
     
-#    def after(self,item):
 #    def childof(self,item):
 #    def left(self)
 #    def right(self)
