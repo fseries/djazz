@@ -97,16 +97,29 @@ class MenuItem(models.Model):
         if self.next:
             self.next.prev = self.prev
             self.next.save()
+        try:
+            lastchild = item.menuitem_parent.get(next=None)
+            lastchild.next = self
+            lastchild.save()
+            self.prev = lastchild
         
-        lastchild = item.menuitem_parent.get(next=None)
-        lastchild.next = self
-        lastchild.save()
+        except self.DoesNotExist:
+            self.prev = None
+        
         self.next = None
-        self.prev = lastchild
         self.parent = item
         self.save()
         
-#    def left(self)
-#    def right(self)
-#    def up(self)
-#    def down(self)
+        
+    def left(self):
+        if self.parent:
+            self.after(self.parent)
+    def right(self):
+        if self.prev:
+            self.childof(self.prev)
+    def up(self):
+        if self.prev:
+            self.before(self.prev)
+    def down(self):
+        if self.next:
+            self.after(self.next)
