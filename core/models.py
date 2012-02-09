@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_delete,post_save
 from django.dispatch import receiver
 
 
@@ -37,15 +37,24 @@ class Menu(models.Model):
     def __unicode__(self):
         return self.title
 
+class MenuItemManager(models.Manager):
+    def get_first(self):
+        return self.get(parent=None,prev=None)
+    
+    def get_last(self):
+        return self.get(parent=None,next=None)
+
 class MenuItem(models.Model):
     label       = models.CharField(max_length=60)
     url         = models.TextField(null=True,blank=True)
     menu        = models.ForeignKey('Menu',related_name='menuitem_menu')
     parent      = models.ForeignKey('self',null=True,blank=True,
                     related_name='menuitem_parent')
-    prev        = models.ForeignKey('self',null=True,blank=True,related_name='menuitem_prev')
-    next        = models.ForeignKey('self',null=True,blank=True,related_name='menuitem_next')
+    prev        = models.ForeignKey('self',null=True,blank=True,related_name='menuitem_prev',on_delete=models.DO_NOTHING)
+    next        = models.ForeignKey('self',null=True,blank=True,related_name='menuitem_next',on_delete=models.DO_NOTHING)
     attributes  = models.TextField(null=True,blank=True)
+    
+    objects = MenuItemManager()
     
     def __unicode__(self):
         return self.label
@@ -109,8 +118,7 @@ class MenuItem(models.Model):
         self.next = None
         self.parent = item
         self.save()
-        
-        
+    
     def left(self):
         if self.parent:
             self.after(self.parent)
@@ -123,3 +131,17 @@ class MenuItem(models.Model):
     def down(self):
         if self.next:
             self.after(self.next)
+
+
+@receiver(pre_delete, sender=MenuItem)
+def on_menuitem_delete(sender,**kwargs):
+    item = kwargs['instance']
+    try:
+        if item.prev:
+            item.prev.next = item.next
+            item.prev.save()
+        if item.next:
+            item.next.prev = item.prev
+            item.next.save()
+    except MenuItem.DoesNotExist:
+        pass
