@@ -30,7 +30,7 @@
             {% block userlinks %}
                 {% url 'django-admindocs-docroot' as docsroot %}
                 
-                <a href="{% url 'blog:index' %}" target="djazz_site">Site index</a> /
+                <a href="{% url 'blog:index' %}">Site index</a> /
                 
                 {% if docsroot %}
                     <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
