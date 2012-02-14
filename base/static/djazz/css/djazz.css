@@ -1,0 +1,144 @@
+body {
+	margin:0;
+	padding:0;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #2f4f4f;
+}
+
+
+#page_wrap {
+	width: 960px;
+	margin: auto;
+}
+
+.site_wrap {
+	padding:0; margin:0;
+}
+.clear {
+	width: 100%;
+	clear: both;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+
+
+
+/*** main menu ***/
+#site_nav {
+	float: left;
+}
+#site_nav ul, #site_nav li{
+	margin:0; padding: 0;
+}
+#site_nav li{
+	float: left;
+}
+#site_nav li:last-child {
+	border-right: 1px solid #4a4a4a;
+}
+#site_nav li a {
+	text-decoration: none;
+	color: #4a4a4a;
+	padding: 0 1em 0 1em;
+	border-left: 1px solid #4a4a4a;
+}
+/*** User ***/
+#site_user {
+	float: right;
+}
+
+
+/*** titles ***/
+#site_header {
+	margin-top: 30px;
+}
+#site_title {
+	margin:0 0 0 20px;padding:0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	font-size: 4.4em;
+}
+#site_title a {
+	color: #1a1a1a;
+	text-decoration: none;
+}
+#site_slogan {
+	margin: 0;
+	padding: 0 0 0 60px;
+	text-shadow: #ccc -1px 1px 2px;
+	font-size: 1.4em;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: normal;
+	font-style: italic;
+}
+
+
+/*** main ***/
+
+/*** columns ***/
+#site_main {
+	border-top: 1px solid #d0d0d0;
+	margin-top: 30px;
+}
+#site_main > .wrap {
+	padding-top: 30px;
+}
+
+#main_left {
+	width: 240px;
+	float: left;
+}
+#main_left > .wrap {
+	padding: 0 10px 0 0;
+}
+
+#main_content {
+	margin-left: 260px;
+}
+
+/*** blocks ***/
+.blocks > ul {
+	margin: 0; padding:0;
+}
+.blocks > ul > li {
+	list-style-type: none;
+}
+
+.block {
+	margin-bottom: 30px;
+}
+.block h2 {
+	color: #000;
+	margin: 0 0 10px 0;
+	padding: 0 0 10px 15px;
+	border-bottom: 1px solid #d0d0d0;
+}
+.block li {
+	list-style-type: none;
+}
+.block li a {
+	color: #556b2f;
+	text-decoration: none;
+}
+
+
+/*** content ***/
+#main_content h1 a,
+#main_content h2 a,
+#main_content h3 a {
+	text-decoration: none;
+	color: #000;
+}
+
+/*** footer ***/
+#site_footer {
+	font-size: .95em;
+	font-style: italic;
+	text-align: center;
+	color: #808080;
+	border-top: 1px solid #d0d0d0;
+}

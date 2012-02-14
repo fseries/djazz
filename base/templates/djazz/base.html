@@ -1,0 +1,64 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Djazz - Blog</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}djazz/css/djazz.css" />
+	{% block head-extras %}{% endblock %}
+</head>
+
+<body>
+<div id="page_wrap">
+
+	<div id="site_top">
+		<div class="wrap">
+			
+			<nav id="site_nav">
+				<ul>
+					<li class="current_page_item"><a href="{% url blog:index %}">Home</a></li>
+					{% if user.is_authenticated %}
+						<li><a href="{% url admin:index %}" target="django_admin">Admin</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+			<div id="site_user">
+				{% block user %}
+					{% if user.is_authenticated %}
+						Logged as {{ user.username }} - <a href="{% url admin:logout %}">Logout</a>
+					{% else %}
+						<a href="{% url admin:index %}">Login</a>
+					{% endif %}
+				{% endblock %}
+			</div>
+			<div class="clear"></div>
+		
+		</div>
+	</div>
+	
+	<header id="site_header">
+		<div class="wrap">
+			<hgroup>
+				{% if site_title %}
+					<h1 id="site_title"><a href="{% url blog:index %}">{{ site_title }}</a></h1>
+				{% endif %}
+				
+				{% if site_slogan %}
+					<h2 id="site_slogan">{{ site_slogan }}</h2>
+				{% endif %}
+			</hgroup>
+		</div>
+	</header>
+	
+	<div id="site_main">
+		<div class="wrap">
+			{% block main %}{% endblock %}
+		</div>
+	</div>
+	<div class="clear"></div>
+	
+	<div id="site_footer">
+		<p>A django/djazz application</p>
+	</div>
+	
+</div>
+</body>
+</html>
