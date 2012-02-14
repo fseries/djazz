@@ -13,7 +13,7 @@ class TypeVarInline(admin.TabularInline):
 class AdminPost(admin.ModelAdmin):
     fieldsets    = (
         (None,{
-               'fields': ('title','parent','uid','type','content','status'),
+               'fields': ('title','uid','parent','type','content','status','category'),
         }),
         ("Advanced options",{
               'classes': ('collapse',),

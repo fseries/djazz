@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Category(models.Model):
+    name = models.CharField(max_length=30,unique=True)
+    parent = models.ForeignKey('self',null=True,blank=True,
+            related_name='category_parent')
 
 class Post(models.Model):
     title       = models.CharField(max_length=100)
@@ -9,6 +13,8 @@ class Post(models.Model):
     author      = models.ForeignKey(User,related_name="author_posts",null=True,blank=True)
     content     = models.TextField(null=True,blank=True)
     type        = models.ForeignKey('Type',null=True,blank=True)
+    category	= models.ManyToManyField('Post',null=True,blank=True,
+            related_name='category_blog')
     status      = models.CharField(max_length=15,null=True,blank=True)
     date        = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User,related_name="last_editor_posts",null=True,blank=True)
@@ -25,7 +31,6 @@ class Post(models.Model):
                 while Post.objects.filter(uid=self.uid + suffixe).exists():
                     suffixe = '_' + str(random.randint(1,1000000000))
                 self.uid += suffixe
-        
         super(Post, self).save(*args, **kwargs)
 
 class PostVar(models.Model):
