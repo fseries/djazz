@@ -52,3 +52,4 @@ class TypeVar(models.Model):
     value   = models.TextField(null=True,blank=True)
     def __unicode__(self):
         return self.key + " - " + self.type.name
+
