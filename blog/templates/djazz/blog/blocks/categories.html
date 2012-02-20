@@ -1,0 +1,22 @@
+<li>
+	<div class="block blog-categories">
+		<h2>Categories</h2>
+		{% if None %}
+			{% if categories %}
+				<ul>
+					{% for category in categories %}
+						<li><a href="#">{{ category.name }}</a></li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				Aucune categories disponibles
+			{% endif %}
+		{% endif %}
+		<ul>
+			<li><a href="#">Demo cat 1</a></li>
+			<li><a href="#">Demo cat 2</a></li>
+			<li><a href="#">Demo cat 3</a></li>
+			<li><a href="#">Demo cat 4</a></li>
+		</ul>
+	</div>
+</li>

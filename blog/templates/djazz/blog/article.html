@@ -1,0 +1,14 @@
+{% extends "djazz/blog/base.html" %}
+
+{% block blog-main %}
+	
+		<div class="post">
+			<h1 class="title"><a href="#">{{ article.title }}</a></h1>
+			<p class="meta">
+				Posted by <a href="#">{{ article.author.username }}</a> on {{ article.date }}
+			<div class="entry">
+				{{ article.content|safe|truncatewords_html:150 }}
+			</div>
+		</div>
+
+{% endblock %}

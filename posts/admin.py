@@ -11,17 +11,15 @@ class TypeVarInline(admin.TabularInline):
     extra = 0
 
 class AdminPost(admin.ModelAdmin):
-    fieldsets    = (
-        (None,{
-               'fields': ('title','uid','parent','type','content','status','category'),
-        }),
-        ("Advanced options",{
-              'classes': ('collapse',),
-              'fields': ('author','last_editor',)
-        }),
-    )
     inlines = [PostVarInline]
     list_filter = ['type']
+    exclude = ('author','last_editor',)
+    
+    def save_model(self, request, obj, form, change):
+        if not obj.id:
+            obj.author = request.user
+        obj.last_editor = request.user
+        super(AdminPost,self).save_model(request,obj,form,change)
 
 class AdminType(admin.ModelAdmin):
     inlines = [TypeVarInline]

@@ -1,0 +1,21 @@
+{% extends "djazz/base.html" %}
+
+{% block head-extras %}
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}djazz/css/blog.css" />
+{% endblock %}
+
+{% block main %}
+
+	<div id="main_left">
+		<div class="wrap">
+			{% include 'djazz/blog/panel_left.html' %}
+		</div>
+	</div>
+	
+	<div id="main_content">
+		<div class="wrap">
+			{% block blog-main %}{% endblock %}
+		</div>
+	</div>
+{% endblock %}
+
