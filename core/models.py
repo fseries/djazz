@@ -15,6 +15,18 @@ def create_profile(sender,**kwargs):
         Profile.objects.get_or_create(user=kwargs['instance'])
 
 
+class Block(models.Model):
+	name = models.CharField(max_length=20,unique=True)
+	description = models.CharField(max_length=255,null=True,blank=True)
+	def __unicode__(self):
+		return self.name
+class BlockVar(models.Model):
+	block = models.ForeignKey('Block',related_name="blockvar_block")
+	key = models.CharField(max_length="60")
+	value = models.TextField(null=True,blank=True)
+	def __unicode__(self):
+		return "["+self.block.name+"] "+self.key
+
 class Config(models.Model):
     site    = models.ForeignKey(Site,null=True,blank=True)
     section = models.CharField(max_length=15,null=True,blank=True)
@@ -145,3 +157,17 @@ def on_menuitem_delete(sender,**kwargs):
             item.next.save()
     except MenuItem.DoesNotExist:
         pass
+
+class Widget(models.Model):
+	name = models.CharField(max_length=20,unique=True)
+	block = models.ForeignKey('Block',null=True,blank=True)
+	description = models.CharField(max_length=255,null=True,blank=True)
+	def __unicode__(self):
+		return self.name
+		
+class WidgetVar(models.Model):
+	widget = models.ForeignKey('Widget',related_name="widgetvar_widget")
+	key = models.CharField(max_length="60")
+	value = models.TextField(null=True,blank=True)
+	def __unicode__(self):
+		return "["+self.widget.name+"] "+self.key
