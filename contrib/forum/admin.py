@@ -1,4 +1,4 @@
 from django.contrib import admin
-from djazz.forum.models import Forum
+from djazz.contrib.forum.models import Forum
 
 admin.site.register(Forum)

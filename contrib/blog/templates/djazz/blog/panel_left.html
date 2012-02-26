@@ -1,6 +1,10 @@
+{% load djazz_core %}
 
 <div class="blocks">
 	<ul>
+		<div block="categories">
+			{% djazz_block "categories" %}
+		</div>
 		{% include 'djazz/blog/blocks/categories.html' %}
 		{% include 'djazz/blog/blocks/archives.html' %}
 	</ul>

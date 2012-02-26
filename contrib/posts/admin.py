@@ -1,5 +1,5 @@
 from django.contrib import admin
-from djazz.posts.models import Post,PostVar
+from djazz.contrib.posts.models import Post,PostVar
 
 
 class PostVarInline(admin.TabularInline):

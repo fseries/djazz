@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from djazz.posts.signals import types_choice
+from djazz.contrib.posts.signals import types_choice
 
 
 def posttype_choices():

@@ -1,5 +1,5 @@
 from django import forms
-from djazz.posts.models import Post
+from djazz.contrib.posts.models import Post
 
 class PostForm(forms.ModelForm):
 	class Meta:

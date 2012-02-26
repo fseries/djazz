@@ -1,4 +1,4 @@
-from djazz.posts.signals import types_choice
+from djazz.contrib.posts.signals import types_choice
 from django.dispatch import receiver
 
 

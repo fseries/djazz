@@ -4,8 +4,8 @@ from django.shortcuts import render
 
 
 def index(request,parent=None):
-    from djazz.forum.models import Forum
-    from djazz.posts.models import Post
+    from djazz.contrib.forum.models import Forum
+    from djazz.contrib.posts.models import Post
     
     if not parent:
         forums = Forum.objects.filter(parent = None)
@@ -20,7 +20,7 @@ def index(request,parent=None):
 
 def topic(request, topic):
     from django.db.models import Q
-    from djazz.posts.models import Post
+    from djazz.contrib.posts.models import Post
     
     posts = Post.objects.filter(type__name='forum')
     posts = posts.filter(Q(id=topic)|Q(parent=topic))
@@ -32,9 +32,9 @@ def topic(request, topic):
 
 def create(request,forum=None,topic=None):
     from django.core.urlresolvers import reverse
-    from djazz.posts.models import Post,PostVar,Type
-    from djazz.forum.models import Forum
-    from djazz.forum.forms import PostForm,PostFormAnonymous
+    from djazz.contrib.posts.models import Post,PostVar
+    from djazz.contrib.forum.models import Forum
+    from djazz.contrib.forum.forms import PostForm,PostFormAnonymous
     
     init = {}
     posts = None
@@ -69,11 +69,11 @@ def create(request,forum=None,topic=None):
                 post.author = request.user
                 post.last_editor = request.user
                 post.status = 'public'
-                post.type = Type.objects.get(name='forum')
+                post.type = 'forum'
                 post.parent = topic
                 post.save()
                 PostVar(post=post,key='forum',value=forum.id).save()
-                return HttpResponseRedirect( reverse('djazz.forum.views.index') )
+                return HttpResponseRedirect( reverse('djazz.contrib.forum.views.index') )
     else:
         if request.user.is_authenticated():
             form = PostForm(initial=init)
