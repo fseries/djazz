@@ -6,15 +6,15 @@ urlpatterns = patterns('',
    url(r'^$', 'djazz.forum.views.index'),
    
    # liste d'un forum
-   url(r'^forum/(\d+)/$', 'djazz.forum.views.index'),
+   url(r'^forum/(\d+)/$', 'djazz.contrib.forum.views.index'),
    
    # creation d'un sujet
-   url(r'^topic/create/(?P<forum>\d+)/$', 'djazz.forum.views.create'),
+   url(r'^topic/create/(?P<forum>\d+)/$', 'djazz.contrib.forum.views.create'),
    
    # reponse a un sujet
-   url(r'^topic/(?P<topic>\d+)/reply/$', 'djazz.forum.views.create'),
+   url(r'^topic/(?P<topic>\d+)/reply/$', 'djazz.contrib.forum.views.create'),
    
    # visualisation d'un sujet
-   url(r'^topic/(\d+)/$', 'djazz.forum.views.topic'),
+   url(r'^topic/(\d+)/$', 'djazz.contrib.forum.views.topic'),
    
 )
