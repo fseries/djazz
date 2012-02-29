@@ -1,6 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from djazz.contrib.posts.signals import types_choice
 
+
+def posttype_choices():
+    types = []
+    types_choice.send(sender=None,types_list=types)
+    return types
+
+
+## Models
 class Category(models.Model):
     name = models.CharField(max_length=30,unique=True)
     parent = models.ForeignKey('self',null=True,blank=True,
@@ -10,18 +19,20 @@ class Post(models.Model):
     title       = models.CharField(max_length=100)
     uid         = models.CharField(max_length=100)
     parent      = models.ForeignKey('self',null=True,blank=True)
-    author      = models.ForeignKey(User,related_name="author_posts",null=True,blank=True)
+    author      = models.ForeignKey(User,related_name="post_author",
+							null=True,blank=True)
     content     = models.TextField(null=True,blank=True)
-    type        = models.ForeignKey('Type',null=True,blank=True)
+    type        = models.CharField(max_length=20,choices=posttype_choices())
     category	= models.ManyToManyField('Post',null=True,blank=True,
             related_name='category_blog')
     status      = models.CharField(max_length=15,null=True,blank=True)
     date        = models.DateTimeField(auto_now_add=True)
-    last_editor = models.ForeignKey(User,related_name="last_editor_posts",null=True,blank=True)
+    last_editor = models.ForeignKey(User,related_name="post_lasteditor",
+							null=True,blank=True)
     last_date   = models.DateTimeField(auto_now=True, auto_now_add=True)
     def __unicode__(self):
         return self.uid
-    
+        
     def save(self, *args, **kwargs):
         import random,re
         if not self.uid and not self.id:
@@ -38,18 +49,5 @@ class PostVar(models.Model):
     key     = models.CharField(max_length=60)
     value   = models.TextField(null=True,blank=True)
     def __unicode__(self):
-        return self.key + " - " + self.post.unix_title
-
-class Type(models.Model):
-    name        = models.CharField(max_length=20)
-    description = models.CharField(max_length=255,blank=True,null=True)
-    def __unicode__(self):
-        return self.name
-    
-class TypeVar(models.Model):
-    type    = models.ForeignKey('Type',related_name="typevars")
-    key     = models.CharField(max_length=60)
-    value   = models.TextField(null=True,blank=True)
-    def __unicode__(self):
-        return self.key + " - " + self.type.name
+        return self.key + " - " + self.post.uid
 

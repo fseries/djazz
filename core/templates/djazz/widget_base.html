@@ -1,0 +1,6 @@
+<div
+	{% for attr in widget_attrs%}
+		{{ attr.name }}="{% for val in attr.values %}{{ val }} {% endfor %}"
+	{% endfor %} >
+	{% block widget %}{% endblock %}
+</div>

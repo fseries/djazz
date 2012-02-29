@@ -1,0 +1,10 @@
+{% extends "djazz/widget_base.html" %}
+
+{% block widget %}
+	{{ categories.count }}
+	<ul>
+		{% for cat in categories %}
+			<li>{{ cat.value }}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

@@ -1,0 +1,4 @@
+{% load djazz_core %}
+{% for widget in block.widget_block.all %}
+	{% djazz_widget widget.id %}
+{% endfor %}
