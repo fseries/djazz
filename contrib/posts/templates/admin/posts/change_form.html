@@ -1,0 +1,6 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrahead %}{{ block.super }}
+	<script type="text/javascript" src="{{ STATIC_URL }}djazz/lib/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}djazz/js/posts.js"></script>
+{% endblock %}

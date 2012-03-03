@@ -1,3 +1,4 @@
+(function( $ ) {
 $(document).ready(function(){
 	var row1 = ""
 	var row2 = ""
@@ -36,3 +37,4 @@ $(document).ready(function(){
 		}
 	});
 });
+})( django.jQuery );
