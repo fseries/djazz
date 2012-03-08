@@ -1,0 +1,40 @@
+{% extends "djazz/profiles/base.html" %}
+
+
+{% block main %}
+	<h2>Profil de l'utilisateur: {{ user.username }}</h2>
+	
+	{% if messages %}
+	<ul>
+		{% for message in messages %}
+			<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	<fieldset>
+		
+		<label>Prenom:</label>
+			<span>{{ user.first_name }}</span>
+			<div class="clear"></div>
+		
+		<label>Nom:</label>
+			<span>{{ user.last_name }}</span>
+			<div class="clear"></div>
+		
+		<label>Email:</label>
+			<span>{{ user.email }}</span>
+			<div class="clear"></div>
+
+		<label>Derniere connection:</label>
+			<span>{{ user.last_login }}</span>
+			<div class="clear"></div>
+
+		<label>Date d'enregistrement:</label>
+			<span>{{ user.date_joined }}</span>
+			<div class="clear"></div>
+		
+	</fieldset>
+	<a href="{% url djazz.contrib.profiles.views.edit %}">Modifier le profil</a> - 
+	<a href="{% url django.contrib.auth.views.password_change %}">Changer le mot de passe</a>
+	
+{% endblock %}
