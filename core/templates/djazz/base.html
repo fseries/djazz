@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Djazz - Blog</title>
+	<title>{% block head-title %}Djazz{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}djazz/css/djazz.css" />
 	{% block head-extras %}{% endblock %}
 </head>
@@ -11,13 +11,9 @@
 
 	<div id="site_top">
 		<div class="wrap">
-			
 			<nav id="site_nav">
 				<ul>
-					<li class="current_page_item"><a href="{% url blog:index %}">Home</a></li>
-					{% if user.is_authenticated %}
-						<li><a href="{% url admin:index %}" target="django_admin">Admin</a></li>
-					{% endif %}
+					{% block site-menu %}{% endblock %}
 				</ul>
 			</nav>
 			<div id="site_user">
@@ -37,18 +33,17 @@
 	<header id="site_header">
 		<div class="wrap">
 			<hgroup>
-				{% if site_title %}
-					<h1 id="site_title"><a href="{% url blog:index %}">{{ site_title }}</a></h1>
-				{% endif %}
-				
-				{% if site_slogan %}
-					<h2 id="site_slogan">{{ site_slogan }}</h2>
-				{% endif %}
+				{% block site-title %}<h1 id="site_title">Djazz</h1>{% endblock %}
+				{% block site-slogan %}<h2 id="site_slogan">Django Powered</h2>{% endblock %}
 			</hgroup>
 		</div>
 	</header>
 	
 	<div id="site_main">
+		{% block site-breadcrumb %}
+			Accueil
+			&gt; <a href="{% url djazz.contrib.profiles.views.index %}">Mon profil</a>
+		{% endblock %}
 		<div class="wrap">
 			{% block main %}{% endblock %}
 		</div>
