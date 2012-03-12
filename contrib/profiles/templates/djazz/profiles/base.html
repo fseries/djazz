@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block site-breadcrumb %}
+	Accueil
+	&gt; <a href="{% url djazz.contrib.profiles.views.index %}">Mon profil</a>
+{% endblock %}
+
+{% block site-user %}
+	{% if user.is_authenticated %}
+		Logged as <a href="{% url djazz.contrib.profiles.views.index %}">{{ user.username }}</a> - <a href="{% url admin:logout %}">Logout</a>
+	{% else %}
+		<a href="{% url admin:index %}">Login</a>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "djazz/profiles/base.html" %}
+
+{% block site-breadcrumb %}
+	{{ block.super }}
+	&gt; Edit
+{% endblock %}
+
+
+{% block main %}
+	<h2>Edition l'utilisateur: {{ user.username }}</h2>
+	
+	<form method="POST" action="{% url djazz.contrib.profiles.views.edit %}">{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Enregistrer">
+	</form>
+	<div class="clear"></div>
+{% endblock %}
